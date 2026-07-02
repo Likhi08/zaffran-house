@@ -1,0 +1,17 @@
+{
+  "name": "nazeers-zaffran-house",
+  "version": "1.0.0",
+  "description": "Single-command MERN restaurant website for Nazeer's Zaffran House",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm install --prefix backend && npm install --prefix frontend",
+    "install:all": "npm install",
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "build": "npm run build --prefix frontend",
+    "start": "npm run build --prefix frontend && npm start --prefix backend",
+    "seed": "npm run seed --prefix backend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
