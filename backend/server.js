@@ -61,8 +61,9 @@ app.use("/api/orders", orderRoutes);
 
 const frontendDist = path.join(__dirname, "../frontend/dist");
 if (fs.existsSync(frontendDist)) {
-  app.use(express.static(frontendDist));
+  app.use(express.static(frontendDist, { index: false }));
   app.get("*", (req, res) => {
+    res.set("Cache-Control", "no-store");
     res.sendFile(path.join(frontendDist, "index.html"));
   });
 }
