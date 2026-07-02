@@ -5,8 +5,18 @@ const CartContext = createContext(null);
 
 const keyFor = (item, option) => `${item._id}-${option.label}`;
 
+const readStoredCart = () => {
+  try {
+    const value = JSON.parse(localStorage.getItem("zfh_cart") || "[]");
+    return Array.isArray(value) ? value : [];
+  } catch {
+    localStorage.removeItem("zfh_cart");
+    return [];
+  }
+};
+
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("zfh_cart") || "[]"));
+  const [cart, setCart] = useState(readStoredCart);
 
   const persist = (next) => {
     setCart(next);

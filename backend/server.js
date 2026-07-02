@@ -41,7 +41,7 @@ app.use(cors({
 app.use(express.json({ limit: "12mb" }));
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
 
-app.get("/", (req, res) => {
+app.get("/api/health", (req, res) => {
   res.json({
     message: "Nazeer's Zaffran House API",
     address: "Main Rd, beside Valisab Road, Revenue Colony, Kadiri, Andhra Pradesh 515591",

@@ -25,10 +25,11 @@ Backend API: http://localhost:5000
 For production-style local run from the root:
 
 ```bash
+npm run build
 npm run start
 ```
 
-That builds the frontend and serves it from the Express backend.
+That serves the built frontend from the Express backend.
 
 ## Run Backend Separately
 
@@ -46,7 +47,7 @@ Set your real admin login in `backend/.env` before seeding:
 
 ```env
 ADMIN_NAME=Admin
-ADMIN_USERNAME=zaffranhouse.com
+ADMIN_USERNAME=zaffranhouse
 ADMIN_EMAIL=admin@zaffranhouse.com
 ADMIN_PASSWORD=replace_with_a_strong_admin_password
 ```
@@ -81,15 +82,15 @@ MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/nazeers_zaffran_ho
 
 6. Set a strong `JWT_SECRET`, then run `npm run seed`.
 
-## Deploy Backend On Render
+## Deploy As One App On Render
 
 1. Push the project to GitHub.
-2. Create a new Render Web Service.
-3. Select the backend folder as the root directory or set build/start commands for `backend`.
+2. Create a new Render Web Service from the repository, or use the included `render.yaml`.
+3. Keep the root directory as the project root.
 4. Build command:
 
 ```bash
-npm install
+npm install && npm run build
 ```
 
 5. Start command:
@@ -98,38 +99,36 @@ npm install
 npm start
 ```
 
-6. Add environment variables from `backend/.env.example`, including `MONGO_URI`, `JWT_SECRET`, `ADMIN_USERNAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `FRONTEND_URL`.
-7. After deploy, run the seed command from Render Shell:
+6. Add environment variables from `backend/.env.example`, especially `MONGO_URI`, `JWT_SECRET`, `ADMIN_USERNAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `FRONTEND_URL`.
+7. Set `FRONTEND_URL` to your Render URL, for example:
 
-```bash
-npm run seed
+```env
+FRONTEND_URL=https://nazeers-zaffran-house.onrender.com
 ```
 
-## Deploy Frontend On Vercel
-
-1. Create a new Vercel project from GitHub.
-2. Set the root directory to `frontend`.
-3. Framework preset: Vite.
-4. Build command:
+8. After deploy, run the admin seed command from Render Shell:
 
 ```bash
-npm run build
+npm run seed:admin --prefix backend
 ```
 
-5. Output directory:
+The backend serves the built React frontend, so the website and API live on the same domain:
 
 ```text
-dist
+Website: https://your-render-service.onrender.com
+API health: https://your-render-service.onrender.com/api/health
 ```
 
-6. Add `VITE_API_URL` with your backend URL plus `/api`, for example `https://api.zaffranhouse.com/api`.
+## Optional Separate Frontend On Vercel
+
+If you prefer separate hosting, deploy `backend` on Render and `frontend` on Vercel. In Vercel, set `VITE_API_URL` to your backend URL plus `/api`, for example `https://api.zaffranhouse.com/api`.
 
 ## Add Custom Domain
 
 1. In Vercel, open Project Settings, then Domains.
 2. Add your domain: `zaffranhouse.com`.
 3. Update DNS at your domain provider using Vercel's shown `A`, `CNAME`, or nameserver records.
-4. In Render, add the frontend domain to `FRONTEND_URL`.
+4. In Render, add the final website domain to `FRONTEND_URL`.
 5. Wait for DNS and SSL to finish provisioning.
 
 Recommended production URLs:

@@ -36,7 +36,7 @@ const CustomerLogin = () => {
           <BrandMark />
         </div>
         <p className="text-sm font-bold uppercase tracking-[0.24em] text-gold">Account Login</p>
-        <h1 className="mt-3 font-display text-4xl text-white">{isRegister ? "Create Account" : "Login"}</h1>
+        <h1 className="mt-3 font-display text-4xl text-white">{isRegister ? "Create Customer Account" : "Customer / Admin Login"}</h1>
         <div className="mt-8 grid gap-4">
           {isRegister && <input className="field" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" />}
           <input className="field" type={isRegister ? "tel" : "text"} required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={isRegister ? "Mobile number" : "Mobile number or admin username"} />
@@ -47,7 +47,7 @@ const CustomerLogin = () => {
           {isRegister ? "Already have an account? Login" : "New customer? Create an account"}
         </button>
         <p className="mt-5 text-sm leading-6 text-white/60">
-          Your mobile number account saves order history for WhatsApp orders placed through this portal.
+          Customers can login with mobile number. Admin can login with admin username and will go directly to the dashboard.
         </p>
         <Link to="/menu" className="mt-5 inline-block text-sm font-bold text-white/70 hover:text-gold">Continue browsing menu</Link>
       </form>
