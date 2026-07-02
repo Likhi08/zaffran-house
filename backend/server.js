@@ -37,7 +37,14 @@ const isAllowedOrigin = (origin) => {
   return /^http:\/\/(localhost|127\.0\.0\.1|192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3})(:\d+)?$/.test(origin);
 };
 
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      "frame-src": ["'self'", "https://www.google.com", "https://maps.google.com"],
+      "img-src": ["'self'", "data:", "https:"]
+    }
+  }
+}));
 app.use(cors({
   origin(origin, callback) {
     callback(isAllowedOrigin(origin) ? null : new Error("Not allowed by CORS"), isAllowedOrigin(origin));
