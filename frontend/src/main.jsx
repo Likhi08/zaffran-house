@@ -7,6 +7,8 @@ import { CartProvider } from "./context/CartContext.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import "./index.css";
 
+document.documentElement.dataset.deployVersion = "2026-07-02-assets-v2";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>

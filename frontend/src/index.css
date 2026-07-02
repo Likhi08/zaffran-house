@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --deploy-cache-bust: "2026-07-02-assets-v2";
+}
+
 html {
   scroll-behavior: smooth;
 }
