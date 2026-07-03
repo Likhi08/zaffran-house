@@ -1,25 +1,15 @@
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import { FaMinus, FaPlus, FaTrash, FaWhatsapp } from "react-icons/fa";
-import api from "../api/axios.js";
 import { restaurant } from "../data/menuData.js";
 import { useCart } from "../context/CartContext.jsx";
-import { useAuth } from "../context/AuthContext.jsx";
 import BrandMark from "../components/BrandMark.jsx";
 
 const Cart = () => {
   const { cart, total, updateQuantity, removeFromCart, clearCart } = useCart();
-  const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
 
   const orderOnWhatsapp = async () => {
     if (!cart.length) {
       toast.error("Your cart is empty");
-      return;
-    }
-    if (!isAuthenticated) {
-      toast.error("Please login to save your order history");
-      navigate("/login");
       return;
     }
     const lines = cart.map((entry, index) => {
@@ -49,13 +39,8 @@ const Cart = () => {
       "",
       `Thank you, ${restaurant.name}.`
     ].join("\n");
-    try {
-      await api.post("/orders", { items: cart, subtotal: total });
-      toast.success("Order saved to your history");
-      window.open(`https://wa.me/${restaurant.whatsapp}?text=${encodeURIComponent(message)}`, "_blank");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Could not save order history");
-    }
+    toast.success("Opening WhatsApp");
+    window.open(`https://wa.me/${restaurant.whatsapp}?text=${encodeURIComponent(message)}`, "_blank");
   };
 
   return (

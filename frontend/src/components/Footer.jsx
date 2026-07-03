@@ -18,7 +18,7 @@ const Footer = () => (
         <div className="grid gap-2 text-white/70">
           <Link to="/menu">Menu</Link>
           <Link to="/reservations">Reservations</Link>
-          <Link to="/login">Account Login</Link>
+          <Link to="/admin/login">Admin Login</Link>
         </div>
       </div>
       <div>

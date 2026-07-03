@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { FaBars, FaPhoneAlt, FaShoppingBag, FaTimes, FaUserCircle } from "react-icons/fa";
+import { FaBars, FaPhoneAlt, FaShoppingBag, FaTimes } from "react-icons/fa";
 import { useCart } from "../context/CartContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import BrandMark from "./BrandMark.jsx";
@@ -35,11 +35,6 @@ const Navbar = () => {
           {links.map(([label, path]) => <NavLink key={path} to={path} className={navClass}>{label}</NavLink>)}
         </nav>
         <div className="flex items-center gap-3">
-          {isAuthenticated && !user?.isAdmin && (
-            <Link to="/orders" className="hidden h-12 w-12 items-center justify-center rounded-full border border-gold/35 text-xl text-gold transition hover:bg-gold hover:text-ink xl:inline-flex" aria-label="Customer account">
-              <FaUserCircle />
-            </Link>
-          )}
           <a href={`tel:${restaurant.phone}`} className="hidden items-center gap-2 rounded-full border border-gold/30 px-3 py-2 text-sm font-bold text-white/85 transition hover:border-gold hover:text-gold xl:flex">
             <FaPhoneAlt className="text-gold" /> {restaurant.phone}
           </a>
@@ -49,10 +44,9 @@ const Navbar = () => {
           </Link>
           {isAuthenticated && user?.isAdmin ? (
             <Link to="/admin/dashboard" className="hidden min-h-12 items-center rounded-full border border-gold/40 px-5 py-2 text-sm font-extrabold whitespace-nowrap text-gold transition hover:bg-gold hover:text-ink md:inline-flex">Admin</Link>
-          ) : isAuthenticated ? (
-            <Link to="/orders" className="hidden min-h-12 items-center rounded-full border border-gold/40 px-5 py-2 text-sm font-extrabold whitespace-nowrap text-gold transition hover:bg-gold hover:text-ink md:inline-flex">My Orders</Link>
-          ) : (
-            <Link to="/login" className="hidden min-h-12 items-center rounded-full border border-gold/40 px-5 py-2 text-sm font-extrabold whitespace-nowrap text-gold transition hover:bg-gold hover:text-ink md:inline-flex">Login</Link>
+          ) : null}
+          {isAuthenticated && !user?.isAdmin && (
+            <button onClick={logout} className="hidden min-h-12 items-center rounded-full border border-gold/40 px-5 py-2 text-sm font-extrabold whitespace-nowrap text-gold transition hover:bg-gold hover:text-ink md:inline-flex">Logout</button>
           )}
           <Link to="/menu" className="hidden min-h-12 items-center rounded-full bg-gold px-5 py-2 text-sm font-extrabold whitespace-nowrap text-ink transition hover:bg-white md:inline-flex">Order Now</Link>
           <button className="rounded-full border border-gold/40 p-3 text-gold lg:hidden" onClick={() => setOpen((value) => !value)} aria-label="Toggle menu">
@@ -68,17 +62,8 @@ const Navbar = () => {
               <NavLink to="/admin/dashboard" onClick={() => setOpen(false)} className="rounded-md px-3 py-3 text-gold">Admin Dashboard</NavLink>
               <button onClick={() => { logout(); setOpen(false); }} className="rounded-md px-3 py-3 text-left text-white/85 hover:bg-gold/10 hover:text-gold">Logout</button>
             </>
-          ) : isAuthenticated ? (
-            <>
-              <div className="rounded-md border border-gold/20 px-3 py-3 text-white/85">
-                <span className="block text-xs uppercase tracking-[0.2em] text-gold">Welcome</span>
-                <span className="block font-bold">{user.name || user.phone}</span>
-              </div>
-              <NavLink to="/orders" onClick={() => setOpen(false)} className="rounded-md px-3 py-3 text-white/85 hover:bg-gold/10 hover:text-gold">My Orders</NavLink>
-              <button onClick={() => { logout(); setOpen(false); }} className="rounded-md px-3 py-3 text-left text-white/85 hover:bg-gold/10 hover:text-gold">Logout</button>
-            </>
           ) : (
-            <NavLink to="/login" onClick={() => setOpen(false)} className="rounded-md px-3 py-3 text-white/85 hover:bg-gold/10 hover:text-gold">Customer Login</NavLink>
+            <NavLink to="/menu" onClick={() => setOpen(false)} className="rounded-md px-3 py-3 text-white/85 hover:bg-gold/10 hover:text-gold">Order on WhatsApp</NavLink>
           )}
         </nav>
       )}
