@@ -28,6 +28,8 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
   process.env.RENDER_EXTERNAL_URL,
   "https://zaffran-house.onrender.com",
+  "https://zaffranhouse.com",
+  "https://www.zaffranhouse.com",
   "http://localhost:5173"
 ].filter(Boolean);
 const isAllowedOrigin = (origin) => {
